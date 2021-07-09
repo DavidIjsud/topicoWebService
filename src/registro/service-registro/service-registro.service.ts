@@ -15,6 +15,5 @@ export class ServiceRegistroService {
    async getAllAdministradores() : Promise<Administrador[]>  {
         return  await this.administradorRepositorio.find();
     }
-
-
+    
 }
