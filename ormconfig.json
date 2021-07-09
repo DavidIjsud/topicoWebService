@@ -1,10 +1,10 @@
 {
-    "type": "mysql",
-    "host": "localhost",
-    "port": 3306,
-    "username": "root",
-    "password": "",
-    "database": "v_topico_final_v1",
+    "type": "postgres",
+    "host": "ec2-54-164-22-242.compute-1.amazonaws.com",
+    "port": 5432,
+    "username": "vsxrzplzlfhcga",
+    "password": "71062a364a48cb5e929504972ad6ea46a48a5b374f7d26c18b190d9f54efb2b8",
+    "database": "d73qesei8495lt",
     "entities": ["dist/**/*.entity{.ts,.js}"],
     "synchronize": false
   }

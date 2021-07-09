@@ -5,10 +5,18 @@ import { Entity } from "typeorm/decorator/entity/Entity";
 @Entity()
 export class Administrador{
 
-       @PrimaryColumn( { type : 'varchar' , length : 255 , unique : true} )
+       @PrimaryColumn(  )
        ci : string;
        
-       @Column( { type : 'varchar' , length : 255  })
+       @Column( )
        password : string;
-              
+
+       @Column( )
+       direccion : string;
+
+       @Column()
+       email : string;
+
+
+       
 }
