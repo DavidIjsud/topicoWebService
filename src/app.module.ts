@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RegistroModule } from './registro/registro.module';
 
 
 @Module({
   imports: [
-            TypeOrmModule.forRoot()
+            TypeOrmModule.forRoot(),
+            RegistroModule
           ],
   controllers: [AppController],
   providers: [AppService],

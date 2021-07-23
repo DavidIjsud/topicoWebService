@@ -1,5 +1,5 @@
+import { Areas } from "src/registro/registro-paciente/enums/Administrador.Area.enum";
 import { Column, Entity } from "typeorm";
-import { Areas } from "../enums/Administrador.Area.enum";
 import { Persona } from "./Persona";
 
 
