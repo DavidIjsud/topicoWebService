@@ -5,7 +5,7 @@
     "username": "vsxrzplzlfhcga",
     "password": "71062a364a48cb5e929504972ad6ea46a48a5b374f7d26c18b190d9f54efb2b8",
     "database": "d73qesei8495lt",
-    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "entities": ["dist/entities/*{.ts,.js}"],
     "synchronize": false,
     "ssl": {
       "rejectUnauthorized": false
