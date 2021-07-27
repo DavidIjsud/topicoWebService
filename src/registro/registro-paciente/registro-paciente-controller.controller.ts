@@ -1,6 +1,9 @@
-import { Controller, Get, HttpException, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Body, Controller, Get, HttpException, Post, Req, Res } from '@nestjs/common';
+import { Response, Request } from 'express';
 import { Paciente } from 'src/entities/Paciente';
+import { Persona } from 'src/entities/Persona';
+import { PacienteDTO } from './dtos/paciente.dto';
+import { PersonaDTO } from './dtos/persona.dto';
 import { RegistroPacienteServiceService } from './services/registro-paciente-service.service';
 
 
@@ -26,6 +29,36 @@ export class RegistroPacienteControllerController {
                     "data" : lista
                });
 
+        }
+
+      @Post('add')
+      async  addNewPaciente(@Res() res: Response , @Body() body: PacienteDTO ){
+
+
+          const x   = await this.registroPacienteService.isPacienteExist(body);
+          console.log(x);
+          
+          if(x){
+            return  res.status(200).json({
+                  "status" : false,
+                  "message" : "Paciente ya existe",
+                  "data" : null
+              });
+          }
+
+          try {
+            const pacienteRegistrado = await this.registroPacienteService.savePaciente(body);
+
+          return res.status(200).json({
+              "status" : true,
+              "message" : "Registro ok",
+              "data" : pacienteRegistrado
+          });
+          } catch (error) {
+              throw new HttpException(error.message, 500);
+              
+          }
+          
         }
     
 
