@@ -47,12 +47,21 @@ export class RegistroPacienteControllerController {
           }
 
           try {
+            const personaRegistrado = await  this.registroPacienteService.savePersona(body);
             const pacienteRegistrado = await this.registroPacienteService.savePaciente(body);
 
           return res.status(200).json({
               "status" : true,
               "message" : "Registro ok",
-              "data" : pacienteRegistrado
+              "data" : [
+                  {
+                    "persona_registrado" : personaRegistrado
+                  },
+                  {
+                    "paciente_registrado" : pacienteRegistrado  
+                  }
+                  
+              ]
           });
           } catch (error) {
               throw new HttpException(error.message, 500);

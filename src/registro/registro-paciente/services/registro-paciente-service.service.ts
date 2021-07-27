@@ -24,7 +24,7 @@ export class RegistroPacienteServiceService {
        }
 
        //this method just save a Person
-       async savePersona( p : PersonaDTO  ) : Promise<Persona> {
+       async savePersona( p : PersonaDTO   ) : Promise<Persona> {
            const personaJson = JSON.parse(JSON.stringify(p));            
            const persona = await this.personaRepositorio.save(personaJson);           
            return persona;
