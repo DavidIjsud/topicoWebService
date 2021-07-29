@@ -29,6 +29,7 @@ export class CuentaControllerController {
 
         @Post('add')
         async addNewCuenta( @Res() res : Response , @Body() body : CuentaDTO ){
+             
           const x = await this.registroCuentaService.isCuentaExists(body);
           if(x){
                return res.status(200).json( NotSuccessMessageJson("Cuenta ya existe") );
@@ -38,7 +39,8 @@ export class CuentaControllerController {
                
                body.pin = (await this.registroCuentaService.createPin()).id;  
                const cuentaGuardada = await this.registroCuentaService.saveCuenta(body);
-               await this.emailService.sendUserConfirmation();
+               const { pin , nombres  } = await this.registroCuentaService.getNombreAndPin(cuentaGuardada.pin, cuentaGuardada.persona);
+               await this.emailService.sendUserConfirmation( cuentaGuardada.email , pin , nombres );
                return res.status(200).json( SuccessMessageJson("Cuenta guardada", cuentaGuardada) );
          
           }catch( error ){

@@ -79,6 +79,34 @@ export class ServiceCuentaService {
         return false;
     }
 
+    //obtener el nombre de la persona y pin asignado a la cuenta
+    async getNombreAndPin( pinId : Pin , ci : Persona){
+
+         const pin : number = await this.pinRepositorio.findOne( {
+                  where: {
+                      id: pinId
+                  }  
+         } ).then( ( pin : Pin ) => {
+               return pin.pin;
+         } );
+
+         const nombres : string = await this.personaRepositorio.findOne( {
+                    where: {
+                        ci: ci
+                    }
+         }).then( ( persona : Persona ) => {
+             return persona.nombres;
+         });
+
+         return {
+             pin,
+             nombres
+         }
+        
+
+    } 
+
+
     //method async to save a cuenta
     async saveCuenta( p : CuentaDTO ) : Promise<Cuenta> {
         const cuentaJson = JSON.parse(JSON.stringify(p));

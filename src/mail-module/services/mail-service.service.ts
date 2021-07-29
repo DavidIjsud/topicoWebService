@@ -6,18 +6,16 @@ export class MailServiceService {
 
     constructor(private mailerService: MailerService  ){}
 
-    async sendUserConfirmation() {
-        const url = `example.com/auth/confirm?token`;
+    async sendUserConfirmation( email : string , pin : number , name : string ) {
         
         await this.mailerService.sendMail({
-          to: 'palmyrasoft@gmail.com',
+          to: email ,
           // from: '"Support Team" <support@example.com>', // override default from
-          subject: 'Welcome to Nice App! Confirm your Email',
+          subject: 'Bienvenido a la plataforma de consulta medica en linea',
           template: './confirmation', // `.hbs` extension is appended automatically
           context: { // ✏️ filling curly brackets with content
-            name: 'David',
-            url,
-            pin : 12345
+            name: name,
+            pin : pin
           },
         });
       }

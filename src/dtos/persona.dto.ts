@@ -20,5 +20,9 @@ export class PersonaDTO {
   @IsNotEmpty()
    nombres : string; 
 
+   @IsInt()
+   @IsNotEmpty()
+   telefono : number;
+
   
 }
