@@ -3,7 +3,7 @@ import { IsBoolean, IsEmail, IsInt, IsNotEmpty, IsString, minLength } from "clas
 
 export class PersonaDTO {
      
-  @IsInt()
+  @IsString()
   @IsNotEmpty()
     ci : number;
 
@@ -20,7 +20,7 @@ export class PersonaDTO {
   @IsNotEmpty()
    nombres : string; 
 
-   @IsInt()
+   @IsString()
    @IsNotEmpty()
    telefono : number;
 

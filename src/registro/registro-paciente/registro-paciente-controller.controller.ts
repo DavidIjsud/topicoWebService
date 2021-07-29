@@ -1,10 +1,12 @@
-import { Body, Controller, Get, HttpException, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Param, Post, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Paciente } from 'src/entities/Paciente';
-import { ErrorException, NotSuccessMessageJson, SuccessMessageJson } from 'src/shared/helper.shared';
+import { editFileName, ErrorException, imageFileFilter, NotSuccessMessageJson, SuccessMessageJson } from 'src/shared/helper.shared';
 import { PacienteDTO } from '../../dtos/paciente.dto';
 import { ServiceCuentaService } from '../registro-cuenta/services/service-cuenta.service';
 import { RegistroPacienteServiceService } from './services/registro-paciente-service.service';
+import { diskStorage } from 'multer';
 
 
 
@@ -34,11 +36,20 @@ export class RegistroPacienteControllerController {
         }
 
       @Post('add/:email')
-      async  addNewPaciente(@Res() res: Response , @Body() body: PacienteDTO,  @Param('email') email : string ){
+      @UseInterceptors(
+          FilesInterceptor( 'image', 3, {
+              storage : diskStorage({
+                  destination: './files',
+                  filename : editFileName
+              }),
+              fileFilter : imageFileFilter
+          } )
+      )
+      async  addNewPaciente(@Res() res: Response , @Body() body: PacienteDTO,  @Param('email') email : string, @UploadedFiles() files   ){
 
 
           const x   = await this.registroPacienteService.isPacienteExist(body);
-          console.log(x);
+          console.log(files);
           
           if(x){
             return  res.status(200).json( NotSuccessMessageJson("Paciente ya existe") );
