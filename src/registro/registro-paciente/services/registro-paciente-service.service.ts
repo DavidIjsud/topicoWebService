@@ -1,18 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PinDTO } from 'src/dtos/Pin.dto';
 import { Paciente } from 'src/entities/Paciente';
 import { Persona } from 'src/entities/Persona';
+import { Pin } from 'src/entities/Pin';
+import { savePerson } from 'src/shared/helper.shared';
 import { Repository } from 'typeorm';
-import { PacienteDTO } from '../dtos/paciente.dto';
-import { PersonaDTO } from '../dtos/persona.dto';
+import { PacienteDTO } from '../../../dtos/paciente.dto';
+import { PersonaDTO } from '../../../dtos/persona.dto';
 
 @Injectable()
 export class RegistroPacienteServiceService {
 
 
         constructor(  @InjectRepository(Paciente) private pacienteRepositorio : Repository<Paciente>, 
-                      @InjectRepository(Persona) private personaRepositorio : Repository<Persona>                          
-        ){
+                      @InjectRepository(Persona) private personaRepositorio : Repository<Persona>)                           
+        {
 
         }
 
@@ -25,9 +28,9 @@ export class RegistroPacienteServiceService {
 
        //this method just save a Person
        async savePersona( p : PersonaDTO   ) : Promise<Persona> {
-           const personaJson = JSON.parse(JSON.stringify(p));            
-           const persona = await this.personaRepositorio.save(personaJson);           
-           return persona;
+
+            return await savePerson(p , this.personaRepositorio);         
+
        }
 
        //create a method async that verify if the paciente is already in the database
@@ -48,6 +51,12 @@ export class RegistroPacienteServiceService {
               const paciente = await this.pacienteRepositorio.save(pacienteJson);
               return paciente;
        }
+
+       
+
+
+
+
 
 
 

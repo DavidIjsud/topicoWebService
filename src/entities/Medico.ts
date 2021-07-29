@@ -1,3 +1,4 @@
+import { Rol } from "src/enums/roles";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { DiaMedico } from "./DiaMedico";
 import { Especialidad } from "./Especialidad";
@@ -9,9 +10,7 @@ import { Reserva } from "./Reserva";
 @Entity()
 export class Medico extends Persona{
 
-    @Column( { type : 'int' , nullable : false , unique : true } )
-    codigoEmpleado : number;
-
+    
     @Column( { type : 'varchar' , nullable : false , length : 560  } )
     contrato : string;
 
@@ -23,6 +22,12 @@ export class Medico extends Persona{
 
     @Column( { type : 'int' , nullable : false , unique : true } )
     numeroMatricula : number;
+
+    @Column( { type : 'bit', nullable : false , default : 1   } )
+       estado : boolean;
+
+    @Column( { type : 'enum' , enum : Rol , default : Rol.SALUD } )
+    rol : Rol;
 
     @OneToMany( () => DiaMedico , diaMedico => diaMedico.medico )
     dias : DiaMedico[];

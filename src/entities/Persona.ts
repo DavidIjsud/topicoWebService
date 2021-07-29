@@ -18,10 +18,8 @@ export class Persona{
        @Column( { type : 'varchar' , length : 20 , nullable : false } )
        nombres : string;
 
-       @Column( { type : 'bit', nullable : false , default : 0   } )
-       estado : boolean;
-
        @OneToMany( () => Cuenta , cuenta => cuenta.persona  )
        cuentas : Cuenta[];
+
 
 }
