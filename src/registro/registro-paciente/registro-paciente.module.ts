@@ -11,7 +11,7 @@ import { RegistroPacienteServiceService } from './services/registro-paciente-ser
   controllers: [RegistroPacienteControllerController],
   providers: [RegistroPacienteServiceService],
   imports : [ TypeOrmModule.forFeature([ Paciente, Persona ]), RegistroCuentaModule, MulterModule.register({
-       dest: './././files'  
+       dest: './files'  
   }) ]
 })
 export class RegistroPacienteModule {}
