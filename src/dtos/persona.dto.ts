@@ -2,7 +2,7 @@ import { IsBoolean, IsEmail, IsInt, IsNotEmpty, IsString, minLength } from "clas
 
 
 export class PersonaDTO {
-     
+ ///ok    
   @IsInt()
   @IsNotEmpty()
     ci : number;
