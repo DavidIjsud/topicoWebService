@@ -7,6 +7,7 @@ import { PacienteDTO } from '../../dtos/paciente.dto';
 import { ServiceCuentaService } from '../registro-cuenta/services/service-cuenta.service';
 import { RegistroPacienteServiceService } from './services/registro-paciente-service.service';
 import { diskStorage } from 'multer';
+import * as multerGoogleStorage from 'multer-google-storage';
 
 
 
