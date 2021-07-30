@@ -6,6 +6,7 @@ import { Persona } from 'src/entities/Persona';
 import { PersonaDTO } from 'src/dtos/persona.dto';
 import { savePerson } from 'src/shared/helper.shared';
 import { Repository } from 'typeorm';
+import { MedicoValidate } from 'src/dtos/dtos_helpers/medicoValidate';
 
 @Injectable()
 export class MedicoServiceService {
@@ -27,6 +28,8 @@ export class MedicoServiceService {
         return await savePerson(p , this.personaRepository);         
 
         }
+
+      
         
         //method to check if the medico already exists in database
         async isMedicoExists( p : MedicoDTO ) : Promise<boolean>{

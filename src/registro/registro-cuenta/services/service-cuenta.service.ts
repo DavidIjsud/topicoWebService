@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { throws } from 'assert';
 import { CuentaDTO } from 'src/dtos/cuenta.dto';
+import { MedicoValidate } from 'src/dtos/dtos_helpers/medicoValidate';
 import { PinValidationDTO } from 'src/dtos/dtos_helpers/pinValidation';
 import { PinDTO } from 'src/dtos/Pin.dto';
 import { Cuenta } from 'src/entities/Cuenta';
@@ -61,6 +62,31 @@ export class ServiceCuentaService {
         return false;
     }
 
+    async  aceptMedico( bodyMEdico : MedicoValidate ) : Promise<boolean> {
+        try {
+        const cuentaMedico = await this.cuentaRepositorio.findOne({
+              where : {
+                   email : bodyMEdico.email,
+                   persona : bodyMEdico.ci
+              }
+        });
+        
+        if(!cuentaMedico){
+                return false;
+        }
+        
+        
+            cuentaMedico.estado = false;
+             await this.cuentaRepositorio.update({
+             email : bodyMEdico.email
+        } , cuentaMedico);
+        return true;
+        } catch (error) {
+                return false;
+        }
+
+    }
+
     async validatePin( pintValidationDTO : PinValidationDTO ) : Promise<boolean> {
       
         const cuenta : Cuenta = await this.cuentaRepositorio.findOne({
@@ -68,8 +94,6 @@ export class ServiceCuentaService {
                 email : pintValidationDTO.email
             }
         } );
-        console.log(cuenta);
-        
         
         if( !cuenta ){
            return false;     

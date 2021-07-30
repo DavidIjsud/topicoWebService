@@ -3,6 +3,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Multer } from 'multer';
 import MulterGoogleCloudStorage from 'multer-cloud-storage';
+import { MedicoValidate } from 'src/dtos/dtos_helpers/medicoValidate';
 import { MedicoDTO } from 'src/dtos/Medico.dto';
 import { Medico } from 'src/entities/Medico';
 import { editFileName, ErrorException, imageFileFilterContrato, NotSuccessMessageJson, SuccessMessageJson } from 'src/shared/helper.shared';
@@ -34,6 +35,19 @@ export class MedicoControllerController {
 
         }
 
+
+        @Post('validatemedico')
+        async validateMedico( @Res()res : Response , @Body() body : MedicoValidate  ){
+
+                const aceptado : boolean = await this.registroCuentaService.aceptMedico(body);
+                if( aceptado ){
+                    return res.status(200).json( SuccessMessageJson("Medico aceptado", []) );
+                }else{
+                    return res.status(200).json( NotSuccessMessageJson("Medico no aceptado") );
+                }
+
+        }
+
         //create a method post that add new Medico
         @Post('add/:email')
         @UseInterceptors(
@@ -60,6 +74,10 @@ export class MedicoControllerController {
             try{
                 const existeCuenta : boolean =  await this.registroCuentaService.isCuentaExistsByEmail( email );
                 if( !existeCuenta ){
+
+                    console.log(files);
+                        
+
                     body.foto = files["image"][0].linkUrl;
                     body.fotoTituloProfesional = files["fotoTituloProfesional"][0].linkUrl;
                     body.contrato = files["contrato"][0].linkUrl;

@@ -51,8 +51,6 @@ export class RegistroPacienteControllerController {
       )
       async  addNewPaciente(@Res() res: Response , @Body() body: PacienteDTO,  @Param('email') email : string, @UploadedFiles() files : Multer   ){
 
-         
-
           const x   = await this.registroPacienteService.isPacienteExist(body);
           console.log(files);
           
