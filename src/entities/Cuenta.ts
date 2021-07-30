@@ -3,7 +3,7 @@ import { Persona } from "./Persona";
 import { Pin } from "./Pin";
 
 
-@Entity()
+@Entity(  )
 export class Cuenta{
 
         @PrimaryColumn( { type : 'varchar' , nullable : false , length : 50, unique : true   } )
@@ -15,15 +15,15 @@ export class Cuenta{
         @Column( { type: 'varchar', nullable : false , length : 50 } )
         contrasena : string;
 
-        @Column( { type: 'bit' , nullable: false , default: 1 } )
+        @Column( { type: 'boolean' , nullable: false , default: 1 } )
         estado: boolean;
 
-        @ManyToOne( () => Persona , persona => persona.cuentas  )
+        @ManyToOne( () => Persona , persona => persona.cuentas , { eager : true }  )
         persona : Persona;
 
 
 
-        @ManyToOne( () => Pin , pin => pin.cuentas )
+        @ManyToOne( () => Pin , pin => pin.cuentas , { eager : true } )
         pin : Pin;
 
 }

@@ -5,6 +5,7 @@ import { ServiceCuentaService } from './services/service-cuenta.service';
 import { Response } from "express";
 import { CuentaDTO } from 'src/dtos/cuenta.dto';
 import { MailServiceService } from 'src/mail-module/services/mail-service.service';
+import { PinValidationDTO } from 'src/dtos/dtos_helpers/pinValidation';
 
 @Controller('registro/cuenta')
 export class CuentaControllerController {
@@ -27,7 +28,22 @@ export class CuentaControllerController {
            ); 
         }
 
-        
+        @Post('verificarpin')
+        async verifyPin( @Res() res: Response , @Body() Body : PinValidationDTO){
+
+                 const validado : boolean = await this.registroCuentaService.validatePin( {
+                          ci : Body.ci ,
+                          pin : Body.pin,
+                          email : Body.email
+                 } );    
+                 
+                 if(validado){
+                      return res.status(200).json( SuccessMessageJson("Pin validado", [])   );
+                 }
+
+                 return res.status(200).json( NotSuccessMessageJson("Pin incorrecto") );
+
+        }
 
         @Post('add')
         async addNewCuenta( @Res() res : Response , @Body() body : CuentaDTO ){

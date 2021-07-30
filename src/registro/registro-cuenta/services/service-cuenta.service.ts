@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { throws } from 'assert';
 import { CuentaDTO } from 'src/dtos/cuenta.dto';
+import { PinValidationDTO } from 'src/dtos/dtos_helpers/pinValidation';
 import { PinDTO } from 'src/dtos/Pin.dto';
 import { Cuenta } from 'src/entities/Cuenta';
 import { Persona } from 'src/entities/Persona';
@@ -58,6 +59,41 @@ export class ServiceCuentaService {
                 return true;
         }
         return false;
+    }
+
+    async validatePin( pintValidationDTO : PinValidationDTO ) : Promise<boolean> {
+      
+        const cuenta : Cuenta = await this.cuentaRepositorio.findOne({
+            where: {
+                email : pintValidationDTO.email
+            }
+        } );
+        console.log(cuenta);
+        
+        
+        if( !cuenta ){
+           return false;     
+        }
+        
+        const pin : Pin = await this.pinRepositorio.findOne({
+            where: {
+                id: cuenta.pin.id
+            }
+        });
+
+        if( pin.pin == pintValidationDTO.pin ){
+            await this.changeStateCuenta( cuenta );    
+            return true;
+        }
+        return false;
+
+    }
+
+    private async changeStateCuenta( cuenta: Cuenta ){
+           cuenta.estado = false ;
+           await this.cuentaRepositorio.update({
+                 email : cuenta.email
+           },cuenta); 
     }
 
     async isCuentaExistsByEmail( email : string ) : Promise<boolean>{
