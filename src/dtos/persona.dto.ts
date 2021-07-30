@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsInt, IsNotEmpty, IsString, minLength } from "class-validator";
+import { IsBoolean, IsEmail, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsString, minLength } from "class-validator";
 
 
 export class PersonaDTO {
@@ -12,7 +12,7 @@ export class PersonaDTO {
    apellidos: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
    foto : string;
   
 
@@ -20,7 +20,7 @@ export class PersonaDTO {
   @IsNotEmpty()
    nombres : string; 
 
-   @IsString()
+   @IsNumberString()
    @IsNotEmpty()
    telefono : number;
 

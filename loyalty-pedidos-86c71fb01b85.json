@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "loyalty-pedidos",
+  "private_key_id": "86c71fb01b8567827fbb28e3d15b50742f4c7278",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDUpWSLsZNhg/w6\nTqQifHMWxZl/5cKHrUbS1ucVU0hn1aE+tk8CRIDlNLE7WoY8x/8oGvWXlf6QCCDr\nTM10O7uWCnL3F4Qe6M8582w45bV4VjLHemrq17NccPi4eWi0I12MAqehxfS5y4kn\n8mQn+yr6F/CFKOA17tAJkq3IQk8AgaMfurQF/iZFW7QZPGE6EJwRtWMQAgGISZ9e\nFWi2K4eOD2/tFteGi2P+PkrY3saSv4QfZVe+nJBBTGc+YF94g9qeDmjfmk21dP9y\n2Ov+uAMw3kUCtcJoIPe6/PROpUpkJugNzrHgKslaGU81gowsw3pmZ+oNCJ9Z/E69\nQdR1xVa3AgMBAAECggEAZ3j7jgYgoyjoSS8PK0DHd+M7KEMS/5ZPijTMSVI3P19y\nkOOBWqce2WlkfG82NslS3Z8QtmxkbI2oBxdeOhr+0qnO+3FT9v5uJ9LNbHpKbX30\nQ6DL+e5v9qF6Rbm+OzmiQYjhLRT4Wpgx62BFYDcV2JBhl0omn9fPH3liWrn5W1LW\nezHK0AecjdvVFw7VP4iFZkKNIpmyPjWzOwNVQv7vbeWW3m/FzqyGRWhEW3kqBvl+\nAIAEJztLHBPaOe3YQkDKpSttVN2NdzA20hbTpPgSl6j5kIBUvVCjdE+c6owoPwL4\nDKF7AiOFwWyIMglYVn+1iGPBcxRMBn5rZh4vB8bV4QKBgQDvaW4KZI+HpmbDOPcB\nDsnxLniH5xsZU+Yr5GTOC8t6+kxmR5SDo5mlW2kqaTwdAlnKi1rkAh+cuJhyM4Si\nf5IWUqrP2wJViwjip36nn9Xt7NpJsMAMrV2AGCw+kzabkSl17Kadp2OOOHM7Zjnv\nGpcbT+2e1wBFf78nSt70Cdvo/wKBgQDjYTRrUmOVw0EltN/bMnBCUF2AS1FQZ1Dl\nUSVfEObs5MSnMiW8RhUbTqKBrzfBPo1G7aDuoPU3zkMqw8wpwvl3T2b7OaYgnmxz\nFqua1Fhde+xWsccsBusV2i5ZlxMlWarROkVJSYkdQt1Xp4TE9A2sdPv5DMnzn2zW\nv8aN2ZoaSQKBgHu4BOiT/OQBprsd1e8TAGKFPD4mvIdDJv/pn/omeDmN3StBtEqu\noXilG1ySU0E+dL5Jc2e+fS2U6xqg6tq6h/jHMYQGTld8aNQP8FCZNYklS8ym7Sff\n8yB93Wdc1exggIdzCssPtE/Ldijs8+VO3WV80XOy8W34zQR2GW8NJTprAoGBAJSf\nU9kWiDs63hlcabnn9RKTXxpdoK/SaEEL0kaaUKblPVkf4SR4FpG7y2LC+cmZLlT/\nO+LeWIp6itKoGonthIwk3WY2n0zQ4Ig1eEOCqqOoPanJGCvB9eVZsFQk+IHAY3PR\nB7rIkxQKQY1q1NC7yThBWvXGEzbnrQeNYKYVZrHpAoGAENNYjx6wLKDRs7sJkpQp\nFfCHGyAkCm5dfK3lhEg5Fmw+64Cd/eX7/R7/2tTNkPrWEz+cOFwR0QA0zWE0kWWd\nDUJqLBOdLAD1BpB/jKpY9sCaV6/eAJI2LKI6oWvTfXsn2tkzjgGlzo0uGu8TaVBt\n/4RLDiSP2PF25DYf01aI+ZI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "storageservice@loyalty-pedidos.iam.gserviceaccount.com",
+  "client_id": "103636200201551881328",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storageservice%40loyalty-pedidos.iam.gserviceaccount.com"
+}

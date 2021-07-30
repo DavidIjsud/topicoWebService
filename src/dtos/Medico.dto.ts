@@ -1,4 +1,4 @@
-import { IsEnum, IsIn, IsInt, IsString } from "class-validator";
+import { IsEnum, IsIn, IsInt, IsNumberString, IsString } from "class-validator";
 import { Especialidad } from "src/entities/Especialidad";
 import { Rol } from "src/enums/roles";
 import { PersonaDTO } from "src/dtos/persona.dto";
@@ -14,7 +14,7 @@ export class MedicoDTO extends PersonaDTO {
     @IsString()
     fotoTituloProfesional: string;
 
-    @IsInt()
+    @IsNumberString()
     numeroMatricula : number;
 
     @IsEnum(Rol)

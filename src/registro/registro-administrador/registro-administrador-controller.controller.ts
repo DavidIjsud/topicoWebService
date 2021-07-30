@@ -1,11 +1,14 @@
-import { Body, Controller, Get, HttpException, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Param, Post, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { Administrador } from 'src/entities/Administrador';
 import { RegistroAdministradorServiceService } from './services/registro-administrador-service.service';
 import { Response } from 'express';
 import { AdministradorDTO } from '../../dtos/Administrador';
-import { ErrorException, NotSuccessMessageJson, SuccessMessageJson } from '../../shared/helper.shared';
+import { editFileName, ErrorException, imageFileFilter, imageFileFilterContrato, NotSuccessMessageJson, SuccessMessageJson } from '../../shared/helper.shared';
 import { ServiceCuentaService } from '../registro-cuenta/services/service-cuenta.service';
 import { PersonaDTO } from 'src/dtos/persona.dto';
+import { FileFieldsInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import MulterGoogleCloudStorage from 'multer-cloud-storage';
+import { Multer } from 'multer';
 @Controller('registro/administrador')
 export class RegistroAdministradorControllerController {
 
@@ -31,7 +34,21 @@ export class RegistroAdministradorControllerController {
 
       //create a method post that add new administrador
     @Post('add/:email')
-    async addNewAdministrador( @Res() res: Response , @Body() body : AdministradorDTO , @Param('email') email : string )  {
+    @UseInterceptors(
+        FileFieldsInterceptor(
+          [ { name : 'image', maxCount : 1 } , { name : 'contrato' , maxCount: 1 }  ], {
+            storage : new MulterGoogleCloudStorage({
+                projectId : 'loyalty-pedidos',
+                bucket : 'topico_avanzado',
+                keyFilename : './loyalty-pedidos-86c71fb01b85.json',
+                keyFile : './loyalty-pedidos-86c71fb01b85.json',
+                filename : editFileName,
+            }),
+            fileFilter : imageFileFilterContrato
+        }
+        )
+    )
+    async addNewAdministrador( @Res() res: Response , @Body() body : AdministradorDTO , @Param('email') email : string, @UploadedFiles() files  : Multer  )   {
 
       const x = await this.registroAdministradorService.isadministradorExists(body);
       if( x ){
@@ -42,23 +59,24 @@ export class RegistroAdministradorControllerController {
 
          const existeCuenta : boolean =  await this.cuentaService.isCuentaExistsByEmail( email );
         if( !existeCuenta ){
+          
+          body.contrato = files["contrato"][0].linkUrl;
+          body.foto = files["image"][0].linkUrl;  
           await this.registroAdministradorService.savePersona(body);
-        const administradorRegistrado = await this.registroAdministradorService.saveAdministrador(body);
-        return res.status(200).json( SuccessMessageJson("Administrador registrado", {
-                     "administrador_registrado" : administradorRegistrado 
-           } ) );
+          const administradorRegistrado = await this.registroAdministradorService.saveAdministrador(body);
+          return res.status(200).json( SuccessMessageJson("Administrador registrado", {
+                      "administrador_registrado" : administradorRegistrado 
+            } ) );
+            
         }else{
            return res.status(200).json( NotSuccessMessageJson("Cuenta con el email ya existe , tome en cuenta que para administrador, medico y paciente deben ser distintos email") );
         }
-
-      
-
-        
       } catch (error) {
-        throw new HttpException( ErrorException(error.message) , 500);
+         throw new HttpException( ErrorException(error.message) , 500);
       }
 
     }
 
 
 }
+

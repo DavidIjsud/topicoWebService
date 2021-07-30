@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { PersonaDTO } from "src/dtos/persona.dto";
 import { Rol } from "../enums/roles";
 
@@ -11,6 +11,7 @@ export class AdministradorDTO extends PersonaDTO{
       
 
       @IsString()
+      @IsOptional()
       contrato : string;
 
       

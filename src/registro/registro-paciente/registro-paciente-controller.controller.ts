@@ -6,8 +6,8 @@ import { editFileName, ErrorException, imageFileFilter, NotSuccessMessageJson, S
 import { PacienteDTO } from '../../dtos/paciente.dto';
 import { ServiceCuentaService } from '../registro-cuenta/services/service-cuenta.service';
 import { RegistroPacienteServiceService } from './services/registro-paciente-service.service';
-import { diskStorage } from 'multer';
-import * as multerGoogleStorage from 'multer-google-storage';
+import MulterGoogleCloudStorage from 'multer-cloud-storage';
+import { Multer } from 'multer';
 
 
 
@@ -38,16 +38,20 @@ export class RegistroPacienteControllerController {
 
       @Post('add/:email')
       @UseInterceptors(
-          FilesInterceptor( 'image', 3, {
-              storage : diskStorage({
-                  destination: './files',
+          FilesInterceptor( 'image', 1, {
+              storage : new MulterGoogleCloudStorage({
+                  projectId : 'loyalty-pedidos',
+                  bucket : 'topico_avanzado',
+                  keyFilename : './loyalty-pedidos-86c71fb01b85.json',
+                  keyFile : './loyalty-pedidos-86c71fb01b85.json',
                   filename : editFileName
               }),
               fileFilter : imageFileFilter
           } )
       )
-      async  addNewPaciente(@Res() res: Response , @Body() body: PacienteDTO,  @Param('email') email : string, @UploadedFiles() files   ){
+      async  addNewPaciente(@Res() res: Response , @Body() body: PacienteDTO,  @Param('email') email : string, @UploadedFiles() files : Multer   ){
 
+         
 
           const x   = await this.registroPacienteService.isPacienteExist(body);
           console.log(files);
@@ -61,10 +65,9 @@ export class RegistroPacienteControllerController {
             const existeCuenta : boolean =  await this.cuentaService.isCuentaExistsByEmail( email );
 
             if( !existeCuenta ){
-              await  this.registroPacienteService.savePersona(body);
-                
+                body.foto = files[0].linkUrl;
+                await  this.registroPacienteService.savePersona(body);
                 const pacienteRegistrado = await this.registroPacienteService.savePaciente(body);
-                
                 return res.status(200).json( SuccessMessageJson("Paciente registrado", {
                   "paciente_registrado" : pacienteRegistrado  
                 }) );
