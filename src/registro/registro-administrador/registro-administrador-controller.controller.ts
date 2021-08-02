@@ -9,6 +9,8 @@ import { PersonaDTO } from 'src/dtos/persona.dto';
 import { FileFieldsInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import MulterGoogleCloudStorage from 'multer-cloud-storage';
 import { Multer } from 'multer';
+import { LoginAdministradorMedicoDTO } from 'src/dtos/dtos_helpers/login.administrador.medico';
+import { Cuenta } from 'src/entities/Cuenta';
 @Controller('registro/administrador')
 export class RegistroAdministradorControllerController {
 
@@ -31,6 +33,19 @@ export class RegistroAdministradorControllerController {
                ); 
 
         }
+
+     @Post('iniciosesion')
+        async iniciosesion( @Res() res : Response  , @Body() body : LoginAdministradorMedicoDTO   ) {
+
+              const cuenta: Cuenta = await this.cuentaService.cuentaExiste(body);
+              if( cuenta == null || cuenta == undefined ){
+                  return res.status(200).json( NotSuccessMessageJson("Cuenta no existe") );
+              }
+
+              return res.status(200).json( SuccessMessageJson("Cuenta existe", cuenta ) );
+              
+
+        }   
 
       //create a method post that add new administrador
     @Post('add/:email')

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { throws } from 'assert';
 import { CuentaDTO } from 'src/dtos/cuenta.dto';
+import { LoginAdministradorMedicoDTO } from 'src/dtos/dtos_helpers/login.administrador.medico';
 import { MedicoValidate } from 'src/dtos/dtos_helpers/medicoValidate';
 import { PinValidationDTO } from 'src/dtos/dtos_helpers/pinValidation';
 import { PinDTO } from 'src/dtos/Pin.dto';
@@ -38,6 +39,23 @@ export class ServiceCuentaService {
                 return true;
             }
             return false;
+    }
+
+    async cuentaExiste( p : LoginAdministradorMedicoDTO ) : Promise<Cuenta> {
+            const cuenta : Cuenta =  await this.cuentaRepositorio.findOne({
+                  where : {
+                       email : p.email,
+                       persona : p.ci,
+                       estado : false
+                  }
+            });
+
+            if( cuenta == null || cuenta == undefined  ){
+                return null;    
+            }
+
+            return cuenta;
+
     }
 
     //generate random number of six digits
