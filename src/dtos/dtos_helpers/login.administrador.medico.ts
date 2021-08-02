@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 
 export class LoginAdministradorMedicoDTO {
@@ -8,7 +8,7 @@ export class LoginAdministradorMedicoDTO {
          email: string;
          
          @IsNotEmpty()
-         @IsNumber()
-         ci: number;
+         @IsString()
+         contrasena: string;
 
 }

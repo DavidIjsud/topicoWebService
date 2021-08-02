@@ -45,7 +45,7 @@ export class ServiceCuentaService {
             const cuenta : Cuenta =  await this.cuentaRepositorio.findOne({
                   where : {
                        email : p.email,
-                       persona : p.ci,
+                       contrasena : p.contrasena,
                        estado : false
                   }
             });
