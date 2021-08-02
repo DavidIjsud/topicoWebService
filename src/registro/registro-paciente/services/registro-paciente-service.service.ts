@@ -40,28 +40,31 @@ export class RegistroPacienteServiceService {
        /// loginValidate
        async loginPacienteValidate( p : LoginPacienteDTO ) : Promise<boolean> {
 
-             const paciente : Paciente = await this.pacienteRepositorio.findOne({
-                    where :{
-                        ci : p.ci   
-                    }
-             });   
-             
-             if( paciente == null  || paciente == undefined ){
-                     return false;
-             }
+              console.log(p  );
+              const cuenta : Cuenta =  await this.cuentaRepositorio.findOne({
+                     where : {
+                         contrasena : p.password,
+                         email : p.email,
+                         estado : false     
+                     }       
+              });  
 
-             const cuenta : Cuenta = await this.cuentaRepositorio.findOne({
-                    where :{
-                      persona : p.ci,
-                      email : p.email,
-                      estado : false   
-                   }
-             })
-
-             if( cuenta == null || cuenta == undefined  ){
-                     return false;
+              console.log(cuenta);
+                     
+              if( cuenta == null || cuenta == undefined  ){
+                   return false;
               }
 
+              const paciente : Paciente = await this.pacienteRepositorio.findOne({
+                       where : {
+                              ci : cuenta.persona.ci
+                       }
+              });  
+              
+              if( paciente == null || paciente == undefined  ){
+                     return false;
+              }
+             
               return true;
        }
 
