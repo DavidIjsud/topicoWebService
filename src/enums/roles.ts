@@ -3,5 +3,6 @@
 export enum Rol {
 
     ADMINISTRADOR = 'ADMINISTRADOR',
-    SALUD = 'MEDICO'
+    SALUD = 'MEDICO',
+    PACIENTE = 'PACIENTE',
 }

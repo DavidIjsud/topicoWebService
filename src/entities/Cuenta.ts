@@ -1,3 +1,4 @@
+import { Rol } from "src/enums/roles";
 import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Persona } from "./Persona";
 import { Pin } from "./Pin";
@@ -17,6 +18,9 @@ export class Cuenta{
 
         @Column( { type: 'boolean' , nullable: false , default: 1 } )
         estado: boolean;
+
+        @Column( { type : 'enum' , enum: Rol,  nullable : false , default : Rol.ADMINISTRADOR } )
+        tipoCuenta : Rol
 
         @ManyToOne( () => Persona , persona => persona.cuentas , { eager : true }  )
         persona : Persona;

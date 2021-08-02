@@ -70,11 +70,9 @@ export class MedicoControllerController {
                 return  res.status(200).json( NotSuccessMessageJson("Medico ya existe") ); 
             
             }
-
             try{
                 const existeCuenta : boolean =  await this.registroCuentaService.isCuentaExistsByEmail( email );
                 if( !existeCuenta ){
-
                     console.log(files);
                     body.foto = files["image"][0].linkUrl;
                     body.fotoTituloProfesional = files["fotoTituloProfesional"][0].linkUrl;
