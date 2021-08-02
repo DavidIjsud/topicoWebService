@@ -33,7 +33,17 @@ export class RegistroPacienteServiceService {
        //this method just save a Person
        async savePersona( p : PersonaDTO   ) : Promise<Persona> {
 
-            return await savePerson(p , this.personaRepositorio);         
+              const persona : Persona  = await this.personaRepositorio.findOne({
+                     where : {
+                         ci : p.ci
+                     }
+               });
+
+               if( persona == null || persona == undefined ){
+                  return await savePerson(p , this.personaRepositorio);
+               }
+
+             return persona;           
 
        }
 
