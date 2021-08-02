@@ -1,4 +1,4 @@
-import { IsDate, IsDateString, IsEmail, IsEnum, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsEnum, isNumber, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
 import { Persona } from "src/entities/Persona";
 
 

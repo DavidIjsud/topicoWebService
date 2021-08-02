@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { LoginPacienteDTO } from 'src/dtos/dtos_helpers/login.paciente';
 import { PinDTO } from 'src/dtos/Pin.dto';
+import { Cuenta } from 'src/entities/Cuenta';
 import { Paciente } from 'src/entities/Paciente';
 import { Persona } from 'src/entities/Persona';
 import { Pin } from 'src/entities/Pin';
@@ -14,7 +16,9 @@ export class RegistroPacienteServiceService {
 
 
         constructor(  @InjectRepository(Paciente) private pacienteRepositorio : Repository<Paciente>, 
-                      @InjectRepository(Persona) private personaRepositorio : Repository<Persona>)                           
+                      @InjectRepository(Persona) private personaRepositorio : Repository<Persona>,
+                      @InjectRepository(Cuenta) private cuentaRepositorio : Repository<Cuenta>,
+                      )                           
         {
 
         }
@@ -32,6 +36,35 @@ export class RegistroPacienteServiceService {
             return await savePerson(p , this.personaRepositorio);         
 
        }
+
+       /// loginValidate
+       async loginPacienteValidate( p : LoginPacienteDTO ) : Promise<boolean> {
+
+             const paciente : Paciente = await this.pacienteRepositorio.findOne({
+                    where :{
+                        ci : p.ci   
+                    }
+             });   
+             
+             if( paciente == null  || paciente == undefined ){
+                     return false;
+             }
+
+             const cuenta : Cuenta = await this.cuentaRepositorio.findOne({
+                    where :{
+                      persona : p.ci,
+                      email : p.email,
+                      estado : false   
+                   }
+             })
+
+             if( cuenta == null || cuenta == undefined  ){
+                     return false;
+              }
+
+              return true;
+       }
+
 
        //create a method async that verify if the paciente is already in the database
        async isPacienteExist( p : PacienteDTO ) : Promise<boolean> {

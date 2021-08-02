@@ -76,8 +76,6 @@ export class MedicoControllerController {
                 if( !existeCuenta ){
 
                     console.log(files);
-                        
-
                     body.foto = files["image"][0].linkUrl;
                     body.fotoTituloProfesional = files["fotoTituloProfesional"][0].linkUrl;
                     body.contrato = files["contrato"][0].linkUrl;

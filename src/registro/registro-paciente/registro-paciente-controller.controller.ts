@@ -8,6 +8,7 @@ import { ServiceCuentaService } from '../registro-cuenta/services/service-cuenta
 import { RegistroPacienteServiceService } from './services/registro-paciente-service.service';
 import MulterGoogleCloudStorage from 'multer-cloud-storage';
 import { Multer } from 'multer';
+import { LoginPacienteDTO } from 'src/dtos/dtos_helpers/login.paciente';
 
 
 
@@ -35,6 +36,17 @@ export class RegistroPacienteControllerController {
                });
 
         }
+
+        @Post('login')
+        async loginValidate( @Res() res:Response , @Body() body : LoginPacienteDTO ){
+            const validado : boolean = await this.registroPacienteService.loginPacienteValidate(body);
+            if(validado){
+                return res.status(200).json( SuccessMessageJson("Login exitoso", []) ); 
+            }else{
+                return res.status(200).json( NotSuccessMessageJson("Login fallido") );
+            }   
+        }
+
 
       @Post('add/:email')
       @UseInterceptors(

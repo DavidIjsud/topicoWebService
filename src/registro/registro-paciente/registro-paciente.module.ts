@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Cuenta } from 'src/entities/Cuenta';
 import { Paciente } from 'src/entities/Paciente';
 import { Persona } from 'src/entities/Persona';
 import { RegistroCuentaModule } from '../registro-cuenta/registro-cuenta.module';
@@ -10,7 +11,7 @@ import { RegistroPacienteServiceService } from './services/registro-paciente-ser
 @Module({
   controllers: [RegistroPacienteControllerController],
   providers: [RegistroPacienteServiceService],
-  imports : [ TypeOrmModule.forFeature([ Paciente, Persona ]), RegistroCuentaModule, MulterModule.register({
+  imports : [ TypeOrmModule.forFeature([ Paciente, Persona, Cuenta ]), RegistroCuentaModule, MulterModule.register({
        dest: './files'  
   }) ]
 })
