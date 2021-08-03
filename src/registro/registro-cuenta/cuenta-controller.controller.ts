@@ -80,7 +80,6 @@ export class CuentaControllerController {
           }
           
           try{
-               
                body.pin = (await this.registroCuentaService.createPin()).id;  
                const cuentaGuardada = await this.registroCuentaService.saveCuenta(body);
                const { pin , nombres  } = await this.registroCuentaService.getNombreAndPin(cuentaGuardada.pin, cuentaGuardada.persona);

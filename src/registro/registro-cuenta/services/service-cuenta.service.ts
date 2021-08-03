@@ -11,7 +11,7 @@ import { Cuenta } from 'src/entities/Cuenta';
 import { Persona } from 'src/entities/Persona';
 import { Pin } from 'src/entities/Pin';
 import { Rol } from 'src/enums/roles';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class ServiceCuentaService {
@@ -226,8 +226,17 @@ export class ServiceCuentaService {
 
     //method async to save a cuenta
     async saveCuenta( p : CuentaDTO ) : Promise<Cuenta> {
+
         const cuentaJson = JSON.parse(JSON.stringify(p));
-        const cuenta = await this.cuentaRepositorio.save( cuentaJson );
+        const cuenta : Cuenta = await this.cuentaRepositorio.save( cuentaJson );
+
+        if( cuenta.tipoCuenta == Rol.ADMINISTRADOR ){
+                cuenta.estado = false;
+        }
+
+        const cuentaActualizada  : UpdateResult = await this.cuentaRepositorio.update({
+                email : cuenta.email
+        } , cuenta )
 
         return cuenta;
     }
