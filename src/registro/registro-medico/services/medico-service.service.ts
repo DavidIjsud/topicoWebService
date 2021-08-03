@@ -20,7 +20,13 @@ export class MedicoServiceService {
         }
 
 
-       
+       async getOneMedico( ci : string ){
+            
+           //convert a string to a number
+           const numCi = parseInt(ci);
+
+           return await this.medicoRepository.findOne( { where: { ci: numCi } } );
+       }
 
 
         //method to get all Medicos from database

@@ -48,6 +48,17 @@ export class MedicoControllerController {
 
         }
 
+        @Get('getonemedico/:ci')
+        async getOneMedico( @Res() res : Response , @Param('ci') ci : string ){
+
+             const medico : Medico = await this.registroMedicoService.getOneMedico(ci);
+             if( medico == null  || medico == undefined ){
+                    return res.status(200).json( NotSuccessMessageJson("Medico no encontrado") );
+             }
+
+             return res.status(200).json( SuccessMessageJson("Medico encontrado", medico) );
+        }
+
         //create a method post that add new Medico
         @Post('add/:email')
         @UseInterceptors(
