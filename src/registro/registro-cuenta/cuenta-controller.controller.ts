@@ -6,6 +6,7 @@ import { Response } from "express";
 import { CuentaDTO } from 'src/dtos/cuenta.dto';
 import { MailServiceService } from 'src/mail-module/services/mail-service.service';
 import { PinValidationDTO } from 'src/dtos/dtos_helpers/pinValidation';
+import { ValidateCuentaDTO } from 'src/dtos/dtos_helpers/validateCuenta';
 
 @Controller('registro/cuenta')
 export class CuentaControllerController {
@@ -26,6 +27,18 @@ export class CuentaControllerController {
            return res.status(200).json( 
                SuccessMessageJson( "Data Found" , lista )
            ); 
+        }
+
+        @Post('validarCuenta')
+        async validateCuenta( @Res() res: Response , @Body() body : ValidateCuentaDTO ){
+
+              const actualizado = await this.registroCuentaService.validateCuenta(body);
+              if( actualizado ){
+                   await this.emailService.sendActivatedMedico( body.mensaje , body.email );
+                   return res.status(200).json( SuccessMessageJson("Medico validado" , []) );
+              }else{
+               return res.status(200).json( NotSuccessMessageJson("Medico no validado") );   
+              }
         }
 
         @Get('getallmedicocuentas')

@@ -5,6 +5,7 @@ import { CuentaDTO } from 'src/dtos/cuenta.dto';
 import { LoginAdministradorMedicoDTO } from 'src/dtos/dtos_helpers/login.administrador.medico';
 import { MedicoValidate } from 'src/dtos/dtos_helpers/medicoValidate';
 import { PinValidationDTO } from 'src/dtos/dtos_helpers/pinValidation';
+import { ValidateCuentaDTO } from 'src/dtos/dtos_helpers/validateCuenta';
 import { PinDTO } from 'src/dtos/Pin.dto';
 import { Cuenta } from 'src/entities/Cuenta';
 import { Persona } from 'src/entities/Persona';
@@ -22,6 +23,33 @@ export class ServiceCuentaService {
           ) {
     }
 
+    async validateCuenta( p : ValidateCuentaDTO ): Promise<boolean> {
+
+          const cuentaToVAlidate : Cuenta = await this.cuentaRepositorio.findOne({
+                where:{
+                    email : p.email,
+                    persona : p.ci   
+                }
+                
+          });
+          
+          if( cuentaToVAlidate != null && cuentaToVAlidate != undefined  ){
+            
+                cuentaToVAlidate.estado = false;
+             const cuentaActualizada   =    await this.cuentaRepositorio.update( {
+                      email : p.email,
+                } ,cuentaToVAlidate)
+              if( cuentaActualizada != null && cuentaActualizada != undefined ){
+                    return true;
+              }  
+
+              return false;
+
+          }
+
+          return false;
+
+    }
 
     async getAllCuentasMedicos() : Promise<Cuenta[]> {
 

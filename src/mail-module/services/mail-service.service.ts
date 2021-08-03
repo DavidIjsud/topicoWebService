@@ -6,6 +6,21 @@ export class MailServiceService {
 
     constructor(private mailerService: MailerService  ){}
 
+
+    async sendActivatedMedico(mensaje : string ,  correo : string  ){
+      
+        await this.mailerService.sendMail({
+             to : correo,
+             subject : "Medico aceptado en la plataforma",
+             template : './medico_validado',
+             context : {
+               mensaje : mensaje
+             }
+        });
+
+    }
+
+
     async sendUserConfirmation( email : string , pin : number , name : string ) {
         
         await this.mailerService.sendMail({
