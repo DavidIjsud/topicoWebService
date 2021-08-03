@@ -17,24 +17,8 @@ export class MedicoControllerController {
                     private registroCuentaService : ServiceCuentaService
             ){}
 
-        @Get('getall')
-        async getAll( @Res() res : Response ){
-
-                let lista : Medico[] = [];
-
-                try{
-                        lista = await this.registroMedicoService.getAllMedico();
-                }
-                catch(error){
-                    throw new HttpException( ErrorException(error.message) , 500);
-                }
-
-                return res.status(200).json( 
-                    SuccessMessageJson( "Data Found" , lista )
-               ); 
-
-        }
-
+       
+                
 
         @Post('validatemedico')
         async validateMedico( @Res()res : Response , @Body() body : MedicoValidate  ){

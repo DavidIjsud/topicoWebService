@@ -9,6 +9,7 @@ import { PinDTO } from 'src/dtos/Pin.dto';
 import { Cuenta } from 'src/entities/Cuenta';
 import { Persona } from 'src/entities/Persona';
 import { Pin } from 'src/entities/Pin';
+import { Rol } from 'src/enums/roles';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -21,6 +22,16 @@ export class ServiceCuentaService {
           ) {
     }
 
+
+    async getAllCuentasMedicos() : Promise<Cuenta[]> {
+
+            return await this.cuentaRepositorio.find({
+                  where :{
+                     tipoCuenta : Rol.SALUD   
+                  }
+            });
+
+    }   
 
     //method async to get all cuentas from cuentaRepositorio
     async getAllCuentas() : Promise<Cuenta[]> {

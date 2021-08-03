@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MedicoDTO } from 'src/dtos/Medico.dto';
 import { Medico } from 'src/entities/Medico';
@@ -7,15 +7,21 @@ import { PersonaDTO } from 'src/dtos/persona.dto';
 import { savePerson } from 'src/shared/helper.shared';
 import { Repository } from 'typeorm';
 import { MedicoValidate } from 'src/dtos/dtos_helpers/medicoValidate';
+import { Cuenta } from 'src/entities/Cuenta';
 
 @Injectable()
 export class MedicoServiceService {
 
         constructor( @InjectRepository(Medico) private medicoRepository : Repository<Medico>,
-                    @InjectRepository(Persona) private personaRepository : Repository<Persona>)
+                    @InjectRepository(Persona) private personaRepository : Repository<Persona>
+                    )
         {
 
         }
+
+
+       
+
 
         //method to get all Medicos from database
        async getAllMedico() : Promise<Medico[]> {

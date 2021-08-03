@@ -50,9 +50,6 @@ export class RegistroAdministradorControllerController {
 
               return res.status(200).json( NotSuccessMessageJson("Usted no es medico y/o administrador" ) );
 
-              
-              
-
         }   
 
       //create a method post that add new administrador

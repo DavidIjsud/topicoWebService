@@ -28,6 +28,19 @@ export class CuentaControllerController {
            ); 
         }
 
+        @Get('getallmedicocuentas')
+        async getAllCuentasMedicos( @Res() res : Response  ){
+               let lista : Cuenta[] = [];
+               try {
+                    lista = await this.registroCuentaService.getAllCuentasMedicos();
+               } catch (error) {
+                    throw new HttpException( ErrorException(error.message) , 500);
+               } 
+               return res.status(200).json( 
+                    SuccessMessageJson( "Data Found" , lista )
+                ); 
+        }
+
         @Post('verificarpin')
         async verifyPin( @Res() res: Response , @Body() Body : PinValidationDTO){
 
