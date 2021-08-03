@@ -9,7 +9,6 @@ import { Reserva } from "./Reserva";
 
 @Entity()
 export class Medico extends Persona{
-
     
     @Column( { type : 'varchar' , nullable : false , length : 560  } )
     contrato : string;

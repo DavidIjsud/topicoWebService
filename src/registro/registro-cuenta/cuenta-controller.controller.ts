@@ -7,6 +7,7 @@ import { CuentaDTO } from 'src/dtos/cuenta.dto';
 import { MailServiceService } from 'src/mail-module/services/mail-service.service';
 import { PinValidationDTO } from 'src/dtos/dtos_helpers/pinValidation';
 import { ValidateCuentaDTO } from 'src/dtos/dtos_helpers/validateCuenta';
+import { Rol } from 'src/enums/roles';
 
 @Controller('registro/cuenta')
 export class CuentaControllerController {
@@ -85,7 +86,11 @@ export class CuentaControllerController {
                body.pin = (await this.registroCuentaService.createPin()).id;  
                const cuentaGuardada = await this.registroCuentaService.saveCuenta(body);
                const { pin , nombres  } = await this.registroCuentaService.getNombreAndPin(cuentaGuardada.pin, cuentaGuardada.persona);
-               await this.emailService.sendUserConfirmation( cuentaGuardada.email , pin , nombres );
+               
+               if( body.tipoCuenta != Rol.ADMINISTRADOR && body.tipoCuenta != Rol.SALUD )  {
+                    await this.emailService.sendUserConfirmation( cuentaGuardada.email , pin , nombres );
+               }
+
                return res.status(200).json( SuccessMessageJson("Cuenta guardada", cuentaGuardada) );
          
           }catch( error ){
