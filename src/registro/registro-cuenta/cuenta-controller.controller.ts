@@ -57,6 +57,7 @@ export class CuentaControllerController {
         @Post('verificarpin')
         async verifyPin( @Res() res: Response , @Body() Body : PinValidationDTO){
 
+
                  const validado : boolean = await this.registroCuentaService.validatePin( {
                           ci : Body.ci ,
                           pin : Body.pin,
@@ -74,6 +75,7 @@ export class CuentaControllerController {
         @Post('add')
         async addNewCuenta( @Res() res : Response , @Body() body : CuentaDTO ){
              
+
           const x = await this.registroCuentaService.isCuentaExists(body);
           if(x){
                return res.status(200).json( NotSuccessMessageJson("Cuenta ya existe") );

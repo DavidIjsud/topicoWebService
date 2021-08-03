@@ -1,5 +1,5 @@
 import { Rol } from "src/enums/roles";
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Persona } from "./Persona";
 import { Pin } from "./Pin";
 

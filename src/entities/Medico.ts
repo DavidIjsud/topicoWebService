@@ -23,6 +23,9 @@ export class Medico extends Persona{
     @Column( { type : 'int' , nullable : false , unique : true } )
     numeroMatricula : number;
 
+    @Column( { type : 'varchar' , nullable : false , length : 560 } )
+    especialidade : string;
+
     @Column( { type : 'bit', nullable : false , default : 1   } )
        estado : boolean;
 
