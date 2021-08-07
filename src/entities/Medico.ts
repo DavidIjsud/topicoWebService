@@ -31,13 +31,13 @@ export class Medico extends Persona{
     @Column( { type : 'enum' , enum : Rol , default : Rol.SALUD } )
     rol : Rol;
 
-    @OneToMany( () => DiaMedico , diaMedico => diaMedico.medico )
+    @OneToMany( () => DiaMedico , diaMedico => diaMedico.medico  ,  { eager : true }  )
     dias : DiaMedico[];
 
-    @OneToMany( () => Reserva , reserva => reserva.medico )
+    @OneToMany( () => Reserva , reserva => reserva.medico , { eager : true }  )
     reservas : Reserva[];
 
-    @OneToOne( () => Especialidad )
+    @OneToOne( () => Especialidad , { eager : true }   )
     @JoinColumn()
     especialidad : Especialidad;
     
