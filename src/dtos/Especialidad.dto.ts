@@ -1,9 +1,10 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { Especialidades } from "src/enums/especialidades";
 
 
 export class EspecialidadDTO{
 
-            @IsString()
+            @IsEnum(Especialidades)
             @IsNotEmpty()
             nombre: string;
 

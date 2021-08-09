@@ -3,6 +3,7 @@ import { Especialidad } from "src/entities/Especialidad";
 import { Rol } from "src/enums/roles";
 import { PersonaDTO } from "src/dtos/persona.dto";
 import { EspecialidadDTO } from "./Especialidad.dto";
+import { Especialidades } from "src/enums/especialidades";
 
 export class MedicoDTO extends PersonaDTO {
 
@@ -15,9 +16,13 @@ export class MedicoDTO extends PersonaDTO {
     @IsString()
     fotoTituloProfesional: string;
 
-    @IsString()
+    // @IsEnum(Especialidades)
+    // @IsNotEmpty()
+    // especialidad : Especialidades;
+
+    @IsInt()
     @IsNotEmpty()
-    especialidade : string;
+    especialidad : number;
 
     @IsNumberString()
     numeroMatricula : number;
