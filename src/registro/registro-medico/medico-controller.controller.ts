@@ -78,6 +78,7 @@ export class MedicoControllerController {
         async add( @Res() res : Response , @Body() body : MedicoDTO, @Param('email') email : string, @UploadedFiles() files : Multer  ){
            
            
+            
            
             const x = await this.registroMedicoService.isMedicoExists(body);
             if(x){

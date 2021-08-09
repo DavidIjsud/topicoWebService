@@ -1,5 +1,5 @@
 import { Rol } from "src/enums/roles";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { DiaMedico } from "./DiaMedico";
 import { Especialidad } from "./Especialidad";
 
@@ -22,8 +22,7 @@ export class Medico extends Persona{
     @Column( { type : 'int' , nullable : false , unique : true } )
     numeroMatricula : number;
 
-    @Column( { type : 'varchar' , nullable : false , length : 560 } )
-    especialidade : string;
+
 
     @Column( { type : 'bit', nullable : false , default : 1   } )
        estado : boolean;
@@ -37,8 +36,7 @@ export class Medico extends Persona{
     @OneToMany( () => Reserva , reserva => reserva.medico , { eager : true }  )
     reservas : Reserva[];
 
-    @OneToOne( () => Especialidad , { eager : true }   )
-    @JoinColumn()
+   @ManyToOne( () => Especialidad , especialidad => especialidad.medico , { eager : true }  )
     especialidad : Especialidad;
     
 

@@ -1,5 +1,6 @@
 import { Especialidades } from "src/enums/especialidades";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Medico } from "./Medico";
 
 
 @Entity()
@@ -10,6 +11,9 @@ export class Especialidad {
 
         @Column( { type : 'enum' , nullable : false , enum : Especialidades } )
         nombre : string;
+        
+        @OneToMany( () => Medico , medico => medico.especialidad    )
+        medico : Medico[];
 
         
 

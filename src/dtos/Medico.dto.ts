@@ -20,7 +20,7 @@ export class MedicoDTO extends PersonaDTO {
     // @IsNotEmpty()
     // especialidad : Especialidades;
 
-    @IsInt()
+    @IsString()
     @IsNotEmpty()
     especialidad : number;
 
