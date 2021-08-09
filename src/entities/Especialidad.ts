@@ -1,3 +1,4 @@
+import { Especialidades } from "src/enums/especialidades";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -7,7 +8,7 @@ export class Especialidad {
         @PrimaryGeneratedColumn()
         id : number;
 
-        @Column( { type : 'varchar' , length : 50 , nullable : false } )
+        @Column( { type : 'enum' , nullable : false , enum : Especialidades } )
         nombre : string;
 
         
