@@ -16,18 +16,18 @@ export class EspecialidadController {
                  return res.status(200).json( SuccessMessageJson("Especialidades obtenidas", listaEspecialidades) );
         }
 
-        @Post('save')
-        async saveESpecialidad( @Res() res : Response ,  @Body() body : EspecialidadDTO ){
+        // @Post('save')
+        // async saveESpecialidad( @Res() res : Response ,  @Body() body : EspecialidadDTO ){
             
-               const especialidadGuardada : Especialidad = await this.especialidadService.save(body);
+        //        const especialidadGuardada : Especialidad = await this.especialidadService.save(body);
 
-               if(especialidadGuardada){
-                          return res.status(200).json( SuccessMessageJson("Especialidad guardada", []) );
-               }else{
-                          return res.status(500).json(  NotSuccessMessageJson("No se pudo guardar la especialidad") );
-               }
+        //        if(especialidadGuardada){
+        //                   return res.status(200).json( SuccessMessageJson("Especialidad guardada", []) );
+        //        }else{
+        //                   return res.status(500).json(  NotSuccessMessageJson("No se pudo guardar la especialidad") );
+        //        }
 
-        }
+        // }
 
 
 }

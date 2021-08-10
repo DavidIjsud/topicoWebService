@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { DiaMedico } from "./DiaMedico";
+import { Horario } from "./Horario";
 import { HorarioDia } from "./HorarioDia";
 
 @Entity()
@@ -11,10 +12,8 @@ export class Dia {
        @Column({ type : 'varchar' , length : 15 })
        nombre : string;
 
-       @OneToMany( () => HorarioDia , horarioDia => horarioDia.dia )
-       horarios : HorarioDia[];
-
-       @OneToMany( () => DiaMedico , diaMedico => diaMedico.dia )
-       diaMedico : DiaMedico[];
+       @ManyToMany( () => Horario )
+       @JoinTable()
+       horarios : Horario[];
 
 }

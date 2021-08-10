@@ -1,5 +1,5 @@
 import { Especialidades } from "src/enums/especialidades";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Medico } from "./Medico";
 
 
@@ -15,6 +15,5 @@ export class Especialidad {
         @OneToMany( () => Medico , medico => medico.especialidad    )
         medico : Medico[];
 
-        
 
 }

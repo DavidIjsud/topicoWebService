@@ -16,10 +16,6 @@ export class MedicoDTO extends PersonaDTO {
     @IsString()
     fotoTituloProfesional: string;
 
-    // @IsEnum(Especialidades)
-    // @IsNotEmpty()
-    // especialidad : Especialidades;
-
     @IsString()
     @IsNotEmpty()
     especialidad : number;

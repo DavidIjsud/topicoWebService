@@ -11,11 +11,6 @@ export class DiaMedico{
      
      @Column( { type : 'bit' , default : 0 , nullable : false } )
      activo : boolean;
-
-     @ManyToOne( () => Dia , dia => dia.diaMedico )
-     dia : Dia;
-
-     @ManyToOne( () => Medico , medico => medico.dias )
-     medico : Medico;
+     
 
 }
