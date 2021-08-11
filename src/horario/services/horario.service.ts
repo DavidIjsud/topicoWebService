@@ -54,7 +54,9 @@ export class HorarioService {
 
         async getAllDays() : Promise<Dia[]> {
 
-                return await this.diaRepository.find();
+                return await this.diaRepository.find( {
+                         loadEagerRelations : false
+                } );
 
         }
 
