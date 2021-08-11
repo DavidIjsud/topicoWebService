@@ -62,25 +62,33 @@ export class HorarioService {
                                 medico : medico    
                             }
                    });
-                   let medicoDia : DiaMedico = null ;     
+                    
                    if(  diaMedico == null || diaMedico == undefined )  {
-                         medicoDia  = await this.diaMedicoRepository.save({
+                         await this.diaMedicoRepository.save({
                                 dia : dia,
                                 medico : medico,
                       });  
                    }
-                   
-                   const horarioDia : HorarioDia = await this.horarioDiaRepository.save({
-                           dia : dia,
-                           horario : hora,
-                   })
 
+                   const horaDia : HorarioDia = await this.horarioDiaRepository.findOne({
+                             where : {
+                                   dia : dia,
+                                   horario : hora   
+                             }
+                   });
 
-                 if( horarioDia ){
+                   if( horaDia == null || horaDia == undefined  ){
+                         this.horarioDiaRepository.save({
+                                dia : dia,
+                                horario : hora,
+                        })
+
                         return true;
-                 }  
+                   }
+                   
+                
 
-                return false;
+                return true;
 
                 }catch(e){
                                 console.log("Error "+ e);
