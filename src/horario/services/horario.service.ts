@@ -58,6 +58,21 @@ export class HorarioService {
 
         }
 
+      async  getHorarioAndDiasMedico( ci : number ) : Promise<DiaMedico[]>  {
+
+
+                const diaMedicos : DiaMedico[] = await this.diaMedicoRepository.find({ where : {
+                        medico : ci,
+                        activo : 0,
+                 },
+                 loadEagerRelations: true
+                 
+                });
+                
+                return diaMedicos;
+                
+        }
+
         async getDiasMedico( ci : number ): Promise<DiaMedico[]>  {
 
                        const diaMedicos : DiaMedico[] = await this.diaMedicoRepository.find({ where : {
@@ -85,9 +100,6 @@ export class HorarioService {
                     }
                 });        
                 
-
-
-
                 console.log( horarioDia );
                 
                 return horarioDia;

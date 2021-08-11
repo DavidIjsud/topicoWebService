@@ -53,6 +53,14 @@ export class HorarioController {
 
     }
 
+    @Get('diasandhorario/medico/:ci')
+    async getDiasAndHorariosMedico( @Res() res : Response , @Param('ci') ci : number  ){
+
+                const diaMEdico = await this.horarioService.getHorarioAndDiasMedico(ci);
+                return res.status(200).json( SuccessMessageJson("Dias e horarios medico encontrado" , diaMEdico) );
+
+    }
+
     @Get('diamedico/:ci')
     async getDiaMedico( @Res() res : Response, @Param('ci') ci : number ){
 
