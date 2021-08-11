@@ -32,14 +32,13 @@ export class Medico extends Persona{
     rol : Rol;
 
 
-    @OneToMany( () => Reserva , reserva => reserva.medico , { eager : true }  )
+    @OneToMany( () => Reserva , reserva => reserva.medico , { eager : true  , nullable : true}  )
     reservas : Reserva[];
 
    @ManyToOne( () => Especialidad , especialidad => especialidad.medico , { eager : true }  )
     especialidad : Especialidad;
 
-    @ManyToMany( () => Dia )
-    @JoinTable()
-    dias : Dia[];
+    @OneToMany( () => DiaMedico , diaMedico => diaMedico.medico , { eager : true }  )
+    dias : DiaMedico[];
 
 }

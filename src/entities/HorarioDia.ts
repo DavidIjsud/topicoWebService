@@ -12,5 +12,11 @@ export class HorarioDia{
         @Column( { type : 'bit' , default : 0 , nullable : false  } )
         activo : boolean;
 
+        @ManyToOne( () => Horario , horario => horario.horarioDias , { eager : true }  )
+        horario : Horario;
+
+        @ManyToOne( () => Dia, dia => dia.horarios )
+        dia : Dia;
+
 
 }

@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegistroModule } from './registro/registro.module';
 import { MailModuleModule } from './mail-module/mail-module.module';
 import { EspecialidadModule } from './especialidad/especialidad.module';
+import { HorarioModule } from './horario/horario.module';
 
 
 @Module({
@@ -12,7 +13,8 @@ import { EspecialidadModule } from './especialidad/especialidad.module';
             TypeOrmModule.forRoot(),
             RegistroModule,
             MailModuleModule,
-            EspecialidadModule
+            EspecialidadModule,
+            HorarioModule
           ],
   controllers: [AppController],
   providers: [AppService],

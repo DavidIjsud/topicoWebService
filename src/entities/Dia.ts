@@ -12,8 +12,10 @@ export class Dia {
        @Column({ type : 'varchar' , length : 15 })
        nombre : string;
 
-       @ManyToMany( () => Horario )
-       @JoinTable()
-       horarios : Horario[];
+       @OneToMany( () => HorarioDia , horarioDia => horarioDia.dia , { eager : true }  )
+       horarios : HorarioDia[];
+
+       @OneToMany( () => DiaMedico , diaMedico => diaMedico.dia )
+       diaMedico : DiaMedico[];
 
 }

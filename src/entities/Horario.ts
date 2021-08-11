@@ -12,4 +12,7 @@ export class Horario {
     @Column( { type : 'varchar' , nullable : false  } )
     horaFijada : string;
 
+    @OneToMany( () => HorarioDia , horarioDia => horarioDia.horario  )
+    horarioDias : HorarioDia[];
+
 }

@@ -12,5 +12,10 @@ export class DiaMedico{
      @Column( { type : 'bit' , default : 0 , nullable : false } )
      activo : boolean;
      
+     @ManyToOne( () => Dia , dia => dia.diaMedico, { eager : true } )
+     dia : Dia;
+
+     @ManyToOne( () => Medico , medico => medico.dias )
+     medico : Medico;
 
 }
