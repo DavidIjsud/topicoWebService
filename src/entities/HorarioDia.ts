@@ -9,8 +9,11 @@ export class HorarioDia{
         @PrimaryGeneratedColumn()
         id: number;
 
-        @Column( { type : 'bit' , default : 0 , nullable : false  } )
+        @Column( { type : 'boolean' , default : false , nullable : false  } )
         activo : boolean;
+
+        @Column( { type : 'int' , nullable : false } )
+        ciMedico : number;
 
         @ManyToOne( () => Horario , horario => horario.horarioDias , { eager : true }  )
         horario : Horario;

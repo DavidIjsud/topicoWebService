@@ -9,7 +9,7 @@ export class DiaMedico{
      @PrimaryGeneratedColumn()
      id: number;
      
-     @Column( { type : 'bit' , default : 0 , nullable : false } )
+     @Column( { type : 'boolean' , default : false , nullable : false } )
      activo : boolean;
      
      @ManyToOne( () => Dia , dia => dia.diaMedico, { eager : true } )

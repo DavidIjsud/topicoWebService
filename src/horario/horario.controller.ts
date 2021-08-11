@@ -8,6 +8,8 @@ import { Dia } from 'src/entities/Dia';
 import { HorarioDTO } from 'src/dtos/dtos_helpers/horario.dto';
 import { RSA_NO_PADDING } from 'constants';
 import { DiaMedico } from 'src/entities/DiaMedico';
+import { DeleteHoraDTO } from 'src/dtos/dtos_helpers/deleteHora';
+import { HorarioDia } from 'src/entities/HorarioDia';
 
 @Controller('horario')
 export class HorarioController {
@@ -28,6 +30,17 @@ export class HorarioController {
 
     }
 
+    @Post('changehorario/state')
+    async changeStateHorar( @Res() res : Response,  @Body() body : DeleteHoraDTO  ){
+
+            if( await this.horarioService.activateDesactivateHorario(body) ){
+                    return res.status(200).json( SuccessMessageJson("Horario modificado" , []) );
+            }else{
+                    return res.status(200).json( NotSuccessMessageJson("Error al modificar horario") );
+            }
+
+    }
+
     @Get('getdays')
     async getDaysAll( @Res() res : Response  ){
         const days : Dia[] = await this.horarioService.getAllDays();
@@ -40,11 +53,19 @@ export class HorarioController {
 
     }
 
+    @Get('diamedico/:ci')
+    async getDiaMedico( @Res() res : Response, @Param('ci') ci : number ){
+
+            const diaMedico : DiaMedico[] = await this.horarioService.getDiasMedico(ci);
+            return res.status(200).json( SuccessMessageJson("Dia medico encontrado" , diaMedico) );
+
+    }
+
     @Get('horariomedico/:ci')
     async getHorarioMedio( @Res() res : Response , @Param('ci') ci : number ){
            
-        const diaMedico : DiaMedico[]  = await this.horarioService.getHorariosMedico(ci);
-         return res.status(200).json( SuccessMessageJson("Horario medio encontrado" , diaMedico) );
+        const horaMedico : HorarioDia[]  = await this.horarioService.getHorariosMedico(ci);
+         return res.status(200).json( SuccessMessageJson("Horario medio encontrado" , horaMedico) );
     }
 
     @Post('scheduledoctor')

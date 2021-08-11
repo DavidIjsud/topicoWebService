@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteHoraDTO } from 'src/dtos/dtos_helpers/deleteHora';
 import { HorarioDTO } from 'src/dtos/dtos_helpers/horario.dto';
 import { Dia } from 'src/entities/Dia';
 import { DiaMedico } from 'src/entities/DiaMedico';
 import { Horario } from 'src/entities/Horario';
 import { HorarioDia } from 'src/entities/HorarioDia';
 import { Medico } from 'src/entities/Medico';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class HorarioService {
@@ -23,28 +24,77 @@ export class HorarioService {
               return  await this.horarioRepository.find();
         } 
 
+        async activateDesactivateHorario( body : DeleteHoraDTO ) : Promise<boolean> {
+
+                   const horarioDia : HorarioDia = await this.horarioDiaRepository.findOne({
+                         where:{
+                              dia : body.diaId,
+                              horario : body.horarioId  ,
+                              ciMedico : body.ciMedico 
+                         }
+                   });
+                   
+                 //  horarioDia.activo = body.estado ? "1" : "0";
+
+                const updateResult : UpdateResult = await   this.horarioDiaRepository.update({
+                          dia : horarioDia.dia,
+                          horario : horarioDia.horario,
+                          ciMedico : horarioDia.ciMedico,
+                   } , {
+                           activo : body.estado
+                   } ) ;
+
+                if( updateResult.affected == 1 ){
+                        return true;
+                }  else {
+                        return false;
+                }
+
+        }
+
         async getAllDays() : Promise<Dia[]> {
 
                 return await this.diaRepository.find();
 
         }
 
-        async getHorariosMedico( ci : number ) : Promise<DiaMedico[]>  {
+        async getDiasMedico( ci : number ): Promise<DiaMedico[]>  {
 
-                const horarioMedico : DiaMedico[] = await this.diaMedicoRepository.find({ where : { 
+                       const diaMedicos : DiaMedico[] = await this.diaMedicoRepository.find({ where : {
 
-                        medico : ci,
-                        activo : 0,
+                                medico : ci,
+                                activo : 0
 
+                       },
+                       loadRelationIds :{
+                               relations : [ 'dia.nombre' ],                       
+                       }
+                }) 
 
-                 }});
+                       console.log(diaMedicos);
+                       return   diaMedicos;
+                       
+        }
 
+        async getHorariosMedico( ci : number ) : Promise<HorarioDia[]> {
 
-                console.log( horarioMedico );
+              
+                const horarioDia : HorarioDia[] = await this.horarioDiaRepository.find({ where : {
+                        ciMedico : ci,
+                        activo : 0
+                    }
+                });        
                 
-                return horarioMedico;
+
+
+
+                console.log( horarioDia );
+                
+                return horarioDia;
 
         }
+
+        
 
         async saveScheduleDoctor( body : HorarioDTO ) : Promise<boolean> {
 
@@ -73,7 +123,8 @@ export class HorarioService {
                    const horaDia : HorarioDia = await this.horarioDiaRepository.findOne({
                              where : {
                                    dia : dia,
-                                   horario : hora   
+                                   horario : hora,
+                                   ciMedico : medico.ci   
                              }
                    });
 
@@ -81,12 +132,11 @@ export class HorarioService {
                          this.horarioDiaRepository.save({
                                 dia : dia,
                                 horario : hora,
+                                ciMedico : medico.ci
                         })
 
                         return true;
                    }
-                   
-                
 
                 return true;
 
@@ -96,12 +146,6 @@ export class HorarioService {
                                 return false;
 
                 }
-
-
-                
-                        
-
-
         }
 
 }
