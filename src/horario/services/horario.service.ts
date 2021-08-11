@@ -29,6 +29,23 @@ export class HorarioService {
 
         }
 
+        async getHorariosMedico( ci : number ) : Promise<DiaMedico[]>  {
+
+                const horarioMedico : DiaMedico[] = await this.diaMedicoRepository.find({ where : { 
+
+                        medico : ci,
+                        activo : 0,
+
+
+                 }});
+
+
+                console.log( horarioMedico );
+                
+                return horarioMedico;
+
+        }
+
         async saveScheduleDoctor( body : HorarioDTO ) : Promise<boolean> {
 
               
@@ -51,8 +68,8 @@ export class HorarioService {
                                 dia : dia,
                                 medico : medico,
                       });  
-                   }   
-
+                   }
+                   
                    const horarioDia : HorarioDia = await this.horarioDiaRepository.save({
                            dia : dia,
                            horario : hora,

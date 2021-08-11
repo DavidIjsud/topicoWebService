@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { Horario } from 'src/entities/Horario';
 import { HorarioService } from './services/horario.service';
 
@@ -6,6 +6,8 @@ import { Response } from 'express';
 import { NotSuccessMessageJson, SuccessMessageJson } from 'src/shared/helper.shared';
 import { Dia } from 'src/entities/Dia';
 import { HorarioDTO } from 'src/dtos/dtos_helpers/horario.dto';
+import { RSA_NO_PADDING } from 'constants';
+import { DiaMedico } from 'src/entities/DiaMedico';
 
 @Controller('horario')
 export class HorarioController {
@@ -36,6 +38,13 @@ export class HorarioController {
 
         return res.status(200).json( SuccessMessageJson("Dias não encontrado" , null) );
 
+    }
+
+    @Get('horariomedico/:ci')
+    async getHorarioMedio( @Res() res : Response , @Param('ci') ci : number ){
+           
+        const diaMedico : DiaMedico[]  = await this.horarioService.getHorariosMedico(ci);
+         return res.status(200).json( SuccessMessageJson("Horario medio encontrado" , diaMedico) );
     }
 
     @Post('scheduledoctor')
