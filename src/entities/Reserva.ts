@@ -10,11 +10,14 @@ export class Reserva{
      @PrimaryGeneratedColumn()
      id: number;
      
-     @Column( { type : 'date' , nullable : false  } )
-     fecha : Date;
+     @Column( { type : 'varchar' , nullable : false  } )
+     fecha : string;
 
-     @Column( { type : 'timestamp' , nullable : false } )
-     hora : Timestamp;
+     @Column( { type : 'varchar' , nullable : false } )
+     hora : string;
+
+     @Column({ type : 'varchar' , nullable : true }  )
+     enlace : string
      
      @ManyToOne( () => Paciente , paciente => paciente.reservas )
      paciente : Paciente;

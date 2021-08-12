@@ -6,6 +6,7 @@ import { RegistroModule } from './registro/registro.module';
 import { MailModuleModule } from './mail-module/mail-module.module';
 import { EspecialidadModule } from './especialidad/especialidad.module';
 import { HorarioModule } from './horario/horario.module';
+import { ReservaModule } from './reserva/reserva.module';
 
 
 @Module({
@@ -14,7 +15,8 @@ import { HorarioModule } from './horario/horario.module';
             RegistroModule,
             MailModuleModule,
             EspecialidadModule,
-            HorarioModule
+            HorarioModule,
+            ReservaModule
           ],
   controllers: [AppController],
   providers: [AppService],
