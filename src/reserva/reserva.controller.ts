@@ -28,6 +28,14 @@ export class ReservaController {
 
     }
 
+    @Post('aprobar/:idreserva')
+    async aprobarReserva( @Res() res : Response , @Param('idreserva') idReserva : number   ){
+
+              await  this.reservasService.approveServe( idReserva );
+              return res.status(200).json( SuccessMessageJson( "Reserva aprobada sastifactoriamente", [] ) );
+
+    }
+
     @Get('obtenerReservasMedico/:cimedico')
     async obtenerReservasMedico( @Res() res : Response , @Param('cimedico') ci : number ){
 

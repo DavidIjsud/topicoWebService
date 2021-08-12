@@ -4,7 +4,9 @@ import { ReservaAddDTO } from 'src/dtos/reservaDto';
 import { Medico } from 'src/entities/Medico';
 import { Paciente } from 'src/entities/Paciente';
 import { Reserva } from 'src/entities/Reserva';
+import { FirabaseService } from 'src/firebase/services/firabase.service';
 import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class ReservaService {
@@ -13,6 +15,7 @@ export class ReservaService {
             @InjectRepository(Reserva) private reservaRepo : Repository<Reserva>,
             @InjectRepository(Medico) private medicoRepo : Repository<Medico>,
             @InjectRepository(Paciente) private pacienteRepo : Repository<Paciente>,
+            private firebaseNotificationsService : FirabaseService
           ){
 
           }  
@@ -27,6 +30,8 @@ export class ReservaService {
                          loadEagerRelations : false,
                          relations : [ 'paciente' ],
                   });
+ 
+                  
 
                   return reservas;
 
@@ -49,16 +54,40 @@ export class ReservaService {
           }
 
 
+       async approveServe( idReserva : number ){
+            
+                  const reservaToAprove : Reserva = await this.reservaRepo.findOne(
+                           
+                           { id : idReserva }
+                         
+                         );
+                  reservaToAprove.enlace = "Nuevo enlace generado";
+                  
+                const reservaSaved:Reserva =   await this.reservaRepo.save( reservaToAprove );
+
+                const data = {
+                      titulo : "Clinica Mi Salud",
+                      mensaje : "Estimado paciente, informarle que su cita ha sido aceptada por el medico, por favor ingresar al enlace generado a la hora reservada. Gracias."   
+                   };
+                  await  this.firebaseNotificationsService.enviarNotificacion(data);        
+
+       }
+
+
        async addNewReserva( reserva : ReservaAddDTO ) : Promise< Reserva > {
 
                  const medico : Medico  = await this.medicoRepo.findOne({ ci : reserva.medico });
                  const paciente : Paciente = await this.pacienteRepo.findOne({ ci : reserva.paciente });
-                return await this.reservaRepo.save( {
+                 const reservaGuardad : Reserva =  await this.reservaRepo.save( {
                      fecha : reserva.fecha,
                      hora : reserva.hora,
                      medico : medico,
                      paciente : paciente,
+
                 }  );
+
+                
+                return reservaGuardad;
 
        }   
 

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,7 +7,7 @@ import { MailModuleModule } from './mail-module/mail-module.module';
 import { EspecialidadModule } from './especialidad/especialidad.module';
 import { HorarioModule } from './horario/horario.module';
 import { ReservaModule } from './reserva/reserva.module';
-
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
@@ -16,7 +16,8 @@ import { ReservaModule } from './reserva/reserva.module';
             MailModuleModule,
             EspecialidadModule,
             HorarioModule,
-            ReservaModule
+            ReservaModule,
+            FirebaseModule
           ],
   controllers: [AppController],
   providers: [AppService],
