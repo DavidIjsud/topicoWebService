@@ -31,7 +31,10 @@ export class MedicoServiceService {
 
         //method to get all Medicos from database
        async getAllMedico() : Promise<Medico[]> {
-            return this.medicoRepository.find();
+            return this.medicoRepository.find({
+                  loadEagerRelations: false,
+                  relations : ['especialidad']
+            });
         }
 
        //this method just save a Person

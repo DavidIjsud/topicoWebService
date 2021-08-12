@@ -124,8 +124,9 @@ export class HorarioService {
                              where :{
                                 dia : dia,
                                 medico : medico    
-                            }
-                   });
+                            },
+                   },
+                   );
                     
                    if(  diaMedico == null || diaMedico == undefined )  {
                          await this.diaMedicoRepository.save({
