@@ -37,6 +37,16 @@ export class MedicoServiceService {
             });
         }
 
+        async getAllMedicoByEspecialidad(  especialidad : number  ) : Promise<Medico[]> {
+            return this.medicoRepository.find({
+                  loadEagerRelations: false,
+                  relations : ['especialidad'],
+                  where : {
+                      especialidad : especialidad  
+                  }
+            });
+        }
+
        //this method just save a Person
       async savePersona( p : PersonaDTO   ) : Promise<Persona> {
 
