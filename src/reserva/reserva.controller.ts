@@ -28,6 +28,17 @@ export class ReservaController {
 
     }
 
+    @Get('obtenerReservasMedico/:cimedico')
+    async obtenerReservasMedico( @Res() res : Response , @Param('cimedico') ci : number ){
+
+                const reservasMedico : Reserva[] = await this.reservasService.obtainReservaByMedico(ci);
+                if( reservasMedico != null || reservasMedico != undefined   ){
+                        return res.status(200).json( SuccessMessageJson( "Reservas obtenidas sastifactoriamente", reservasMedico ) );
+                }
+                return res.status(200).json( SuccessMessageJson( "Error al obtener las reservas del medico", [] ) );
+
+    }
+
     @Get('obtenerReservas/:cipaciente')
     async obtenerReservasPaciente( @Res() res : Response , @Param('cipaciente') ci : number ){
 
