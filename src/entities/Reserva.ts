@@ -16,7 +16,7 @@ export class Reserva{
      @Column( { type : 'varchar' , nullable : false } )
      hora : string;
 
-     @Column({ type : 'varchar' , nullable : true }  )
+     @Column({ type : 'varchar' , nullable : true , default : ""  }  )
      enlace : string
      
      @ManyToOne( () => Paciente , paciente => paciente.reservas )
