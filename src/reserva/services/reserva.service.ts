@@ -18,6 +18,21 @@ export class ReservaService {
           }  
 
 
+          async obtainAllReservasOfCliente( ciPaciente : number ) : Promise<Reserva[]> {
+
+                const reservas : Reserva[] = await  this.reservaRepo.find({
+                      where : {
+                           paciente : ciPaciente
+                      },
+                      loadEagerRelations : false,
+                      relations : [ 'medico' ],
+                });
+
+                return reservas;
+
+          }
+
+
        async addNewReserva( reserva : ReservaAddDTO ) : Promise< Reserva > {
 
                  const medico : Medico  = await this.medicoRepo.findOne({ ci : reserva.medico });

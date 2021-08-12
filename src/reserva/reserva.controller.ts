@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { ReservaAddDTO } from 'src/dtos/reservaDto';
 import { Reserva } from 'src/entities/Reserva';
@@ -25,6 +25,17 @@ export class ReservaController {
             }
 
             return res.status(200).json( SuccessMessageJson( "Error al guardar la reserva", [] ) );
+
+    }
+
+    @Get('obtenerReservas/:cipaciente')
+    async obtenerReservasPaciente( @Res() res : Response , @Param('cipaciente') ci : number ){
+
+            const reservasPaciente : Reserva[] = await this.reservasService.obtainAllReservasOfCliente(ci);
+            if( reservasPaciente != null || reservasPaciente != undefined   ){
+                    return res.status(200).json( SuccessMessageJson( "Reservas obtenidas sastifactoriamente", reservasPaciente ) );
+            }
+            return res.status(200).json( SuccessMessageJson( "Error al obtener las reservas del paciente", [] ) );
 
     }
 
