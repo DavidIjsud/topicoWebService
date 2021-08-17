@@ -1,3 +1,4 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReservaAddDTO } from 'src/dtos/reservaDto';
@@ -15,7 +16,8 @@ export class ReservaService {
             @InjectRepository(Reserva) private reservaRepo : Repository<Reserva>,
             @InjectRepository(Medico) private medicoRepo : Repository<Medico>,
             @InjectRepository(Paciente) private pacienteRepo : Repository<Paciente>,
-            private firebaseNotificationsService : FirabaseService
+            private firebaseNotificationsService : FirabaseService,
+            private httpService : HttpService
           ){
 
           }  
@@ -53,6 +55,19 @@ export class ReservaService {
 
           }
 
+        //method to genera random string
+        
+       public generateRandomString() : string {
+            let result           = '';
+            const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const charactersLength = characters.length;
+            for ( let i = 0; i < length; i++ ) {
+                  result += characters.charAt(Math.floor(Math.random() * 
+            charactersLength));
+            }
+              return result;
+        }
+
 
        async approveServe( idReserva : number ){
             
@@ -61,15 +76,45 @@ export class ReservaService {
                            { id : idReserva }
                          
                          );
-                  reservaToAprove.enlace = "Nuevo enlace generado";
+
+                   //generate ramdom string
+                              
+
+
+                  reservaToAprove.enlace = this.generateRandomString();
                   
                 const reservaSaved:Reserva =   await this.reservaRepo.save( reservaToAprove );
 
-                const data = {
-                      titulo : "Clinica Mi Salud",
-                      mensaje : "Estimado paciente, informarle que su cita ha sido aceptada por el medico, por favor ingresar al enlace generado a la hora reservada. Gracias."   
-                   };
-                  await  this.firebaseNotificationsService.enviarNotificacion(data);        
+               this.httpService.post("https://fcm.googleapis.com/fcm/send", 
+                    {
+                         "to": "fMdwK_0SQkmVuv_grbV53c:APA91bFTBiVbGMkYkI7BF4WjsAod9tA4LVtzCAm56lDv1mnCZunP5rs6RQnrXmf1sRiVGXZMfoic3Gmz1Mh4M2L83APYwL1I3IxyZBA4N1AX-_Ij9s2e-j12WtxcgTu4qEQhBUetfuKK",
+                         "notification": {
+                               "title": "Clinica Mi Salud",
+                               "body": "Estimado paciente, informarle que su cita ha sido aceptada por el medico, por favor ingresar al enlace generado a la hora reservada. Gracias.",
+                               "sound": "Tri-tone"
+                         },
+
+                         "data": {
+                               "any": "any"
+                         }
+                   },
+                   {
+                     headers : {
+                        "Content-Type": "application/json",
+                        "Authorization": "key=AAAAcVzyVbI:APA91bFKgxvLX-7eWSaYFXLonymrkrW1swFNrfiDA584KGBO8psMC4k-xXzMwqeQxzhWvk2JdaTB4lkApLTWA2MGEYXWmnmXneWvAb6COiFGLsQ7YLJe4T9txK8EeUrIYriKA8ykAiRd"
+                     }     
+                   }
+             ).subscribe( (value) =>   {
+
+                      console.log(value.status);
+                      
+
+             }, ( error ) => {
+                    
+                        console.log("Error "+error);
+                        
+
+             }  );
 
        }
 
