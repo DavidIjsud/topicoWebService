@@ -56,18 +56,15 @@ export class ReservaService {
           }
 
         //method to genera random string
-        
-       public generateRandomString() : string {
-            let result           = '';
-            const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            const charactersLength = characters.length;
-            for ( let i = 0; i < length; i++ ) {
-                  result += characters.charAt(Math.floor(Math.random() * 
-            charactersLength));
-            }
-              return result;
-        }
+        private generateRandomString() : string {
+            let text = "";
+            const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+            for ( let i = 0; i < 20; i++ )
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
+       }
 
        async approveServe( idReserva : number ){
             
