@@ -8,6 +8,7 @@ import { EspecialidadModule } from './especialidad/especialidad.module';
 import { HorarioModule } from './horario/horario.module';
 import { ReservaModule } from './reserva/reserva.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { ConsultaModule } from './consulta/consulta.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { FirebaseModule } from './firebase/firebase.module';
             EspecialidadModule,
             HorarioModule,
             ReservaModule,
-            FirebaseModule
+            FirebaseModule,
+            ConsultaModule
           ],
   controllers: [AppController],
   providers: [AppService],
