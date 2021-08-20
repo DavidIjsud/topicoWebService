@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import admin , { ServiceAccount } from 'firebase-admin'; 
+import { WsAdapter } from '@nestjs/platform-ws';
 
 async function bootstrap() {
  // const app = await NestFactory.create(AppModule);
@@ -28,6 +29,7 @@ async function bootstrap() {
         transform : true,
         whitelist : true
   }) );
+  app.useWebSocketAdapter(new WsAdapter(app));
   await app.listen( process.env.PORT || 3001);
 }
 bootstrap();

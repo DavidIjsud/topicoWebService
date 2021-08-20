@@ -1,28 +1,17 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 
-@WebSocketGateway()
-export class ConsultaGateway {
+@WebSocketGateway(3000)
+export class ConsultaGateway  implements OnGatewayInit   {
+  afterInit(server: any) {
+    console.log("Socket inicializado");
+    
+  }
 
-  @WebSocketServer() server;
-  users : number = 0;
+  @SubscribeMessage("message")
+  handleMessage(client: any, payload: any): string {
+    return "Hello world!";
+  }
 
-  async handleConnection() {
-    // A client has connected
-    this.users++;
-    // Notify connected clients of current users
-    this.server.emit('users', this.users);
-  }
-  async handleDisconnect() {
-    // A client has disconnected
-    this.users--;
-    // Notify connected clients of current users
-    this.server.emit('users', this.users);
-  }
-  @SubscribeMessage('receta')
-  async onReceta(client, message) {
-    client.broadcast.emit('receta', message);
-  }
-  
 
 }
